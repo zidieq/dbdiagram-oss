@@ -3,18 +3,22 @@
 @import "VDbChart";
 
 .body {
+
+  // 黑夜模式
   &--dark {
     --chart-bg-color: #44444c;
     --chart-bg-grid-small-stroke-color: rgb(127, 127, 127);
     --chart-bg-grid-stroke-color: rgb(191, 191, 191);
 
     --ref-color: #9b9ca4;
-    --ref-highlight-color: #3ea8de;
+    --ref-highlight-color: #16be32;
     --field-name-color: #d7d7d9;
     --field-type-color: #999;
     --field-bg-color: #37383f;
     --pk-field-color: #d7d7d9;
-    --highlight-field-color: #4b4c53;
+    // --highlight-field-color: #4b4c53;
+    // 被选中的字段的背景色
+    --highlight-field-color: #16be32;
     --temp-ref-color: #5d5e67;
     --endpoint-color: #d7d7d9;
     --graph-container-bg-color: #37383f;
@@ -31,20 +35,21 @@
     --table-tooltip-bg-color: rgba(0, 0, 0, 0.9);
   }
 
+  // 白天模式
   &--light {
     --chart-bg-color: #fbfbfb;
     --chart-bg-grid-small-stroke-color: rgb(127, 127, 127);
     --chart-bg-grid-stroke-color: rgb(63, 63, 63);
 
     --ref-color: #d3d3d3;
-    --ref-highlight-color: #619bcc;
+    --ref-highlight-color: #16be32;
 
     --field-name-color: #6f6f6f;
     --field-type-color: #999;
     --field-bg-color: #f6f6f6;
 
     --pk-field-color: #000;
-    --highlight-field-color: #deecf3;
+    --highlight-field-color: #16be32;
 
     --temp-ref-color: #87cefa;
     --endpoint-color: #000;
@@ -64,14 +69,15 @@
   }
 }
 
-.dbml-graph, .db-chart {
+.dbml-graph,
+.db-chart {
   font-family: $table-font-family;
   font-weight: 400;
   font-size: 13px;
 
   background-color: var(--chart-bg-color);
 
-  > svg {
+  >svg {
     cursor: grab;
 
     &:active {
@@ -105,7 +111,8 @@
   }
 
 
-  .db-table, .db-field {
+  .db-table,
+  .db-field {
     &-tooltip {
       display: none;
       min-width: 4rem;
@@ -124,15 +131,15 @@
   .db-table__highlight .db-table-tooltip,
   .db-field__highlight .db-field-tooltip,
   {
-    display: block;
-  }
+  display: block;
+}
 
-  .grid {
-    stroke: #16a085;
-    stroke-width: 0.5;
-    stroke-opacity: 0;
-    transition-property: stroke-opacity;
-    transition-duration: 1s;
-    pointer-events: none;
-  }
+.grid {
+  stroke: #16a085;
+  stroke-width: 0.5;
+  stroke-opacity: 0;
+  transition-property: stroke-opacity;
+  transition-duration: 1s;
+  pointer-events: none;
+}
 }

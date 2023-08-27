@@ -1,0 +1,4 @@
+GET /ver.json?data=12345 HTTP/1.1
+Host: 152.136.191.178:16888
+
+data=123

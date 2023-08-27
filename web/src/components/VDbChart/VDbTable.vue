@@ -130,9 +130,27 @@
   const gridSnap = store.grid.snap;
 
   const onMouseEnter = (e) => {
+    props.fields.forEach(field =>{
+      field.endpoints.forEach(curPoint =>{
+        curPoint.ref.selfHighLight=true;
+        curPoint.ref.endpoints.forEach(curRefPoint =>{
+          curRefPoint.fields[0].selfHighLight = true;
+        })
+      })
+    })
     highlight.value = true
   }
   const onMouseLeave = (e) => {
+    props.fields.forEach(field =>{
+      field.endpoints.forEach(curPoint =>{
+        curPoint.ref.selfHighLight=false;
+        curPoint.ref.endpoints.forEach(curRefPoint =>{
+
+          curRefPoint.fields[0].selfHighLight = false;
+        })
+      })
+    })
+    
     highlight.value = false
     dragging.value = false
   }

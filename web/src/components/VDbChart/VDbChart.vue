@@ -76,7 +76,7 @@
                     :container-ref="root"
                     @click:header="dblclickHelper(onTableDblClick, $event, table)"
                     @click:field="(...e) => dblclickHelper(onFieldDblClick, ...e)"
-                    @mouseenter.passive="onTableMouseEnter"
+                    @mouseenter.passive="onTableMouseEnter($event,table)"
                     @mouseleave.passive="onTableMouseLeave"
         />
       </g>
@@ -346,7 +346,18 @@
   function onRefMouseLeave (e) {
   }
 
-  function onTableMouseEnter (e) {
+  function onTableMouseEnter (e,curTable) {
+    console.log('--------------------------------------------')
+    // console.log('tables')
+    // console.dir(props.tables)
+    // console.log('refs')
+    // console.dir(props.refs)
+    // console.log('e')
+    // console.dir(e);
+    console.log('table')
+    console.dir(curTable)
+    window.myTable = curTable;
+    console.log('--------------------------------------------')
     e.target.parentElement.appendChild(e.target)
   }
 

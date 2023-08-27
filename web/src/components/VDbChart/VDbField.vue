@@ -4,7 +4,7 @@
     :id="`field-${id}`"
     :class="{
       'db-field':true,
-      'db-field__highlight': highlight,
+      'db-field__highlight': highlight || props.selfHighLight,
       'db-field__dragging': dragging,
       'db-field__pk': pk,
       'db-field__unique': unique,
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, onMounted, ref, watch } from 'vue'
 
   const props = defineProps({
     id: Number,
@@ -57,7 +57,8 @@
     width: Number,
     table: Object,
     endpoints: Array,
-    _enum: Object
+    _enum: Object,
+    selfHighLight: Boolean
   })
   const root = ref(null)
 
@@ -90,5 +91,6 @@
   const onMouseDown = (e) => {
     dragging.value = true
   }
+
 
 </script>
