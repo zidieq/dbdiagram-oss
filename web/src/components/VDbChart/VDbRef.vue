@@ -4,8 +4,12 @@
     'db-ref__highlight': (highlight || props.selfHighLight)
   }" @mouseenter.passive="onMouseEnter" @mouseleave.passive="onMouseLeave">
     <path class="db-ref__hitbox" :d="path" />
-    <path class="db-ref__path" :d="path" />
-
+    <path class="db-ref__path" :d="path" style="marker-end: url(#markerArrow);" />
+    <defs>
+      <marker id="markerArrow" markerWidth="5" markerHeight="5" refx="2" refy="6" orient="auto">
+        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+      </marker>
+    </defs>
     <g class="db-ref__control-points">
       <!-- <circle v-for="(v, i) of controlPoints" :key="i" :cx="v.x" :cy="v.y" :class="{
         'db-ref__control-point': true,
@@ -141,7 +145,7 @@ const updateControlPoints = () => {
   } else if (!s.auto) {
     return
   }
-  
+
   // 用于确定起始点，起始与终止字段的可连接点都有两个，这里用来确定最终使用这两个字段的哪一个点用以进行连接
   let [start, end] = getClosest(startElAnchors, endElAnchors)
   console.log('updateControlPoints', start, end, startElAnchors, endElAnchors)
@@ -162,15 +166,15 @@ const updateControlPoints = () => {
   // 中间点离表本体的最小距离，防止连线的中间的竖线贴到表格上
   const separatorLength = 20;
   // [开头字段的左边点的x, 开头字段的右边点的x, 结尾字段的左边点的x, 结尾字段的右边点的x]
-  const loc = [startElAnchors[0].x - separatorLength,startElAnchors[1].x + separatorLength,endElAnchors[0].x - separatorLength,endElAnchors[1].x+separatorLength]
-  if(loc[1] <= loc[2]){
-      mid.x = loc[2]
-  } else if(loc[1] > loc[2] && loc[3] > loc[1]){
+  const loc = [startElAnchors[0].x - separatorLength, startElAnchors[1].x + separatorLength, endElAnchors[0].x - separatorLength, endElAnchors[1].x + separatorLength]
+  if (loc[1] <= loc[2]) {
+    mid.x = loc[2]
+  } else if (loc[1] > loc[2] && loc[3] > loc[1]) {
     mid.x = loc[3];
     start = startElAnchors[1];
     end = endElAnchors[1];
-  } else if(loc[1] > loc[2] && loc[3] < loc[1] && loc[2] > loc[0]){
-    if(loc[2] - loc[0] > loc[1] - loc[3]){
+  } else if (loc[1] >= loc[2] && loc[3] <= loc[1] && loc[2] > loc[0]) {
+    if (loc[2] - loc[0] > loc[1] - loc[3]) {
       mid.x = loc[1];
       start = startElAnchors[1];
     } else {
@@ -178,16 +182,16 @@ const updateControlPoints = () => {
       start = startElAnchors[0];
     }
     end = endElAnchors[1];
-  } else if(loc[0] > loc[2] && loc[1] > loc[3] && loc[3]> loc[0]){
+  } else if (loc[0] >= loc[2] && loc[1] >= loc[3] && loc[3] > loc[0]) {
     mid.x = loc[2];
     start = startElAnchors[0];
     end = endElAnchors[0];
-  } else if(loc[3]<loc[0]){
-    
+  } else if (loc[3] < loc[0]) {
+
   }
-  
+
   // --------------------------------------------------------------------------------------------------
-  
+
 
   s.vertices = [
     {
@@ -209,7 +213,10 @@ const path = computed(() => {
   if (points.length == 0 || points.some(p => Number.isNaN(p.x) || Number.isNaN(p.y))) return ``
   const start = getClosestAnchor(points[0], startElAnchors)
   const end = getClosestAnchor(points[points.length - 1], endElAnchors)
-  const html = `M ${start.x},${start.y} L ${points.map(p => (`${p.x},${p.y}`)).join(' ')} L ${end.x} ${end.y}`;
+  // 直线相连
+  // const html = `M ${start.x},${start.y} L ${points.map(p => (`${p.x},${p.y}`)).join(' ')} L ${end.x} ${end.y}`;
+  // 曲线相连
+  const html = `M ${start.x},${start.y} C ${points.map(p => (`${p.x},${p.y}`)).join(' ')}  ${end.x} ${end.y}`;
   return html;
 })
 
