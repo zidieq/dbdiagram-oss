@@ -3,8 +3,17 @@
     'db-ref': true,
     'db-ref__highlight': (highlight || props.selfHighLight)
   }" @mouseenter.passive="onMouseEnter" @mouseleave.passive="onMouseLeave">
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="glow" />
+        <feMerge>
+          <feMergeNode in="glow" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
     <path class="db-ref__hitbox" :d="path" />
-    <path class="db-ref__path" :d="path" style="marker-end: url(#markerArrow);" />
+    <path class="db-ref__path" :d="path" filter="url(#glow)" />
     <defs>
       <marker id="markerArrow" markerWidth="5" markerHeight="5" refx="2" refy="6" orient="auto">
         <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
@@ -21,6 +30,24 @@
 
   </g>
 </template>
+
+<style scoped>
+.db-ref__path {
+  stroke-dasharray: 15 2;
+  animation: move 4s linear infinite;
+
+}
+
+@keyframes move {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 300;
+  }
+}
+</style>
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, onUpdated, reactive, ref, watch, watchEffect } from 'vue'
