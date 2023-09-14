@@ -95,7 +95,7 @@
   }
 
   const updateHeight = () => {
-    state.value.height = 35 + (30 * props.fields.length);
+    state.value.height = 25 + (20 * props.fields.length);
   }
 
   watch(() => props.fields, value => {
@@ -117,7 +117,7 @@
 
   const tooltipSize = computed(() => ({
     width: 200,
-    height: 35 + (30 * props.fields.length)
+    height: 25 + (20 * props.fields.length)
   }))
 
   const highlight = ref(false)

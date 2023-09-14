@@ -64,12 +64,12 @@
 
   const size = computed(() => ({
     width: props.width,
-    height: 30
+    height: 20
   }))
 
   const position = computed(() => ({
     x: 0,
-    y: 35 + (props.table.fields.findIndex(f => f.id === props.id) * 30)
+    y: 25 + (props.table.fields.findIndex(f => f.id === props.id) * 20)
   }))
 
   const mounted = onMounted(() => {

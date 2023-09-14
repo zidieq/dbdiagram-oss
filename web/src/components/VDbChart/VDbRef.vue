@@ -32,7 +32,7 @@
 </template>
 
 <style scoped>
-.db-ref__path {
+/* .db-ref__path {
   stroke-dasharray: 15 2;
   animation: move 4s linear infinite;
 
@@ -46,7 +46,7 @@
   100% {
     stroke-dashoffset: 300;
   }
-}
+} */
 </style>
 
 <script setup>
@@ -85,11 +85,11 @@ const getPositionAnchors = (endpoint) => {
   return [
     {
       x: s.x,
-      y: s.y + 35 + (30 * fieldIndex) + (30 / 2.0)
+      y: s.y + 25 + (20 * fieldIndex) + (20 / 2.0)
     },
     {
       x: s.x + s.width,
-      y: s.y + 35 + (30 * fieldIndex) + (30 / 2.0)
+      y: s.y + 25 + (20 * fieldIndex) + (20 / 2.0)
     }
   ]
 }
@@ -163,9 +163,9 @@ const controlPoints = computed(() => {
   return s.vertices
 })
 
-const updateControlPoints = () => {
-  const startElAnchors = startAnchors.value
-  const endElAnchors = endAnchors.value
+const updateControlPoints = ({startPointArray,endPointArray}={}) => {
+  const startElAnchors = startAnchors.value || startPointArray;
+  const endElAnchors = endAnchors.value || endPointArray;
 
   if (!s.vertices.length || s.vertices.some(v => Number.isNaN(v.x) || Number.isNaN(v.y))) {
     s.auto = true
