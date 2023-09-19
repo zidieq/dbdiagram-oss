@@ -195,7 +195,7 @@ const updateControlPoints = ({startPointArray,endPointArray}={}) => {
   // [开头字段的左边点的x, 开头字段的右边点的x, 结尾字段的左边点的x, 结尾字段的右边点的x]
   const loc = [startElAnchors[0].x - separatorLength, startElAnchors[1].x + separatorLength, endElAnchors[0].x - separatorLength, endElAnchors[1].x + separatorLength]
   if (loc[1] <= loc[2]) {
-    mid.x = loc[2]
+    mid.x = (loc[1]+loc[2])/2
   } else if (loc[1] > loc[2] && loc[3] > loc[1]) {
     mid.x = loc[3];
     start = startElAnchors[1];
@@ -214,7 +214,7 @@ const updateControlPoints = ({startPointArray,endPointArray}={}) => {
     start = startElAnchors[0];
     end = endElAnchors[0];
   } else if (loc[3] < loc[0]) {
-
+    mid.x = (loc[3]+loc[0]) / 2;
   }
 
   // --------------------------------------------------------------------------------------------------
@@ -230,6 +230,7 @@ const updateControlPoints = ({startPointArray,endPointArray}={}) => {
       y: end.y
     }
   ]
+  console.log('linePoint:',s.vertices)
 }
 
 const path = computed(() => {
